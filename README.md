@@ -11,3 +11,5 @@ To actually start it up, run:
 It requires a mongod process. The db settings can be configured in ```config.js```.
 
 It's setup to run on ```port:8080```. This can also be modified in ```config.js```.
+
+Live demo at: https://peaceful-retreat-3720.herokuapp.com/
