@@ -4,6 +4,7 @@
 var React           = require('react');
 var ThreadTimestamp = require('../Shared/ThreadTimestamp.jsx');
 var ThreadSample    = require('./ThreadSample.jsx');
+var ReactRouter     = require('react-router');
 var Link            = ReactRouter.Link;
 
 function resultsNotEmpty(threads) {
