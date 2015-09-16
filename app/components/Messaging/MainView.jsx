@@ -10,7 +10,6 @@ var Messages = require('./Messages.jsx');
 var Writer = require('./Writer.jsx');
 var AddHandle = require('./AddHandle.jsx');
 var AppStore = require('../../stores/appStore.js');
-var AppDispatcher = require('../../dispatchers/AppDispatcher.js');
 var socket = require('../../interfaces/socket.js');
 var ChatActions = require('../../actions/ChatActions.js');
 var isNode = (typeof process != 'undefined' && typeof process.versions != 'undefined' && typeof process.versions.node != 'undefined');
