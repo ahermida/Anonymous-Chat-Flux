@@ -8,7 +8,7 @@ var SearchInput   = require('./SearchInput.jsx');
 var HomeTitle     = require('../Shared/HomeTitle.jsx');
 var SearchResults = require('./SearchResults.jsx');
 var searchStore   = require('../../stores/searchStore.js');
-var AppDispatcher = require('../../dispatchers/appDispatcher.js');
+var AppDispatcher = require('../../dispatchers/AppDispatcher.js');
 var SearchActions = require('../../actions/SearchActions.js');
 var LoadMore      = require('./LoadMore.jsx');
 var isNode        = (typeof process != 'undefined' && typeof process.versions != 'undefined' && typeof process.versions.node != 'undefined');
