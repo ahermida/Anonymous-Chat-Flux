@@ -119,7 +119,7 @@ app.use(express.static(__dirname + '/public'));
 
 //REACT ROUTER
 function render(content, data, done) {
-  fs.readFile('./views/index.hbs', 'utf8', function (err, layout) {
+  fs.readFile('./views/index.html', 'utf8', function (err, layout) {
     if (err) done(err);
     done(null, layout
         .replace('{{{body}}}', content)
