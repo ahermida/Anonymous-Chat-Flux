@@ -1178,12 +1178,21 @@ AppDispatcher.handleSetterAction = function (action) {
 module.exports = AppDispatcher;
 
 },{"flux":81}],22:[function(require,module,exports){
+(function (process){
 //SOCKET IO GLOBAL
-var socket = require('socket.io-client')('http://localhost:8080/');
+var isNode = typeof process != 'undefined' && typeof process.versions != 'undefined' && typeof process.versions.node != 'undefined';
+var localSock;
+if (!isNode) {
+  localSock = window.location.hostname;
+} else {
+  localSock = "localhost:8080";
+}
+var socket = require('socket.io-client')(localSock);
 // Not to be used on the server
 module.exports = socket;
 
-},{"socket.io-client":280}],23:[function(require,module,exports){
+}).call(this,require('_process'))
+},{"_process":118,"socket.io-client":280}],23:[function(require,module,exports){
 (function (process){
 //==============================================================================
 //                           CHAT STORE SETUP
