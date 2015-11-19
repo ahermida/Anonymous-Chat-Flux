@@ -6,11 +6,11 @@ var React         = require('react');
 var SearchActions = require('../../actions/SearchActions.js');
 var ReactRouter   = require('react-router');
 var Link          = ReactRouter.Link;
-var Navigation    = ReactRouter.Navigation;
+var History       = ReactRouter.History;
 
 module.exports    = React.createClass({
 
-  mixins: [Navigation],
+  mixins: [History],
   getInitialState: function() {
     return {
       searched: this.props.searched
@@ -32,7 +32,7 @@ module.exports    = React.createClass({
       var newSearched = this.buildQuery(event.target.value);
       var queryParams = event.target.value.trim().toLowerCase().split(' ');
       SearchActions.doSearch({ topics: queryParams, page: 0 });
-      this.transitionTo('/s/' + newSearched);
+      this.history.pushState(null, `/s/${newSearched}`);
     }
   },
 
@@ -40,7 +40,7 @@ module.exports    = React.createClass({
       var newSearched = this.buildQuery(this.state.searched);
       var queryParams = this.state.searched.trim().toLowerCase().split(' ');
       SearchActions.doSearch({ topics: queryParams, page: 0 });
-      this.transitionTo('/s/' + newSearched);
+      this.history.pushState(null, `/s/${newSearched}`);
   },
 
   render: function() {

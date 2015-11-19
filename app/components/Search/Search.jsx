@@ -47,11 +47,11 @@ module.exports = React.createClass({
 
   //Load Initial Messages Via Ajax
   componentWillMount: function() {
-    var queryParams = this.getParams().query.substr(9).toLowerCase().split('+');
+    var queryParams = this.props.params.query.substr(9).toLowerCase().split('+');
     if (!isNode) {
-      if(data.doLoad)
+      if (data.doLoad) {
         SearchActions.doSearch({ topics: queryParams, page: this.state.searchData.page});
-      else {
+      } else {
         SearchActions.syncData(data);
       }
     }
@@ -69,16 +69,16 @@ module.exports = React.createClass({
   },
 
   decodedQuery: function() {
-    return this.getParams().query.substr(9).split('+');
+    return this.props.params.query.substr(9).split('+');
   },
 
   naturalQuery: function() {
     var reggy = /\+/gi;
-    return this.getParams().query.substr(9).replace(reggy, ' ');
+    return this.props.params.query.substr(9).replace(reggy, ' ');
   },
 
   showLoadButton: function() {
-    var queryParams = this.getParams().query.substr(9).toLowerCase().split('+');
+    var queryParams = this.props.params.query.substr(9).toLowerCase().split('+');
     if (this.state.searchData.results.length >= (this.state.searchData.page + 1) * 15) {
       return (
         <LoadMore query={{ topics: queryParams, page: this.state.searchData.page + 1}}

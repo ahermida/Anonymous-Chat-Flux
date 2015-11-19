@@ -3,6 +3,7 @@
 //==============================================================================
 
 var React = require('react');
+var ReactDOM = require('react-dom')
 var Router = require('react-router');
 var HomeTitle = require('../Shared/HomeTitle.jsx');
 var ChatSearch = require('./ChatSearch.jsx');
@@ -52,9 +53,9 @@ module.exports = React.createClass({
   //Load Initial Messages Via Ajax
   componentWillMount: function() {
     if (!isNode) {
-      socket.emit('join room', this.getParams().thread);
+      socket.emit('join room', this.props.params.thread);
       if (data.doLoad)
-        ChatActions.loadMessages(this.getParams().thread);
+        ChatActions.loadMessages(this.props.params.thread);
       else {
         ChatActions.syncData(data);
       }
@@ -74,7 +75,7 @@ module.exports = React.createClass({
     var height = Math.max( document.body.scrollHeight, document.body.offsetHeight,
                      document.documentElement.clientHeight, document.documentElement.scrollHeight,
                      document.documentElement.offsetHeight );
-    if ((!React.findDOMNode(this.refs.add_handle).matches(":focus")) &&
+    if ((!ReactDOM.findDOMNode(this.refs.add_handle).matches(":focus")) &&
       161 > (height - window.innerHeight - window.scrollY)) {
       window.scrollTo(0, document.body.scrollHeight);
     }
@@ -85,7 +86,7 @@ module.exports = React.createClass({
       <div className="main_view">
         <div className="header">
           <HomeTitle area="title_name_operational" />
-          <span className="thread_name" title="Room Name" >{this.getParams().thread}</span>
+          <span className="thread_name" title="Room Name" >{this.props.params.thread}</span>
           <AddHandle ref="add_handle" username={this.state._data.username} />
           <ChatSearch />
         </div>
@@ -94,7 +95,7 @@ module.exports = React.createClass({
         <Writer userID={this.state._data.userID }
                 readAll={this.state._data.readAll}
                 username={this.state._data.username}
-                thread={this.getParams().thread}
+                thread={this.props.params.thread}
                 users={this.state._data.users}
                 enterMode={this.state._data.enterMode}
                 ref="writer"

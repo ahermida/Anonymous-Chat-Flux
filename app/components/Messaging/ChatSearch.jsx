@@ -4,13 +4,13 @@
 
 var React       = require('react');
 var ReactRouter = require('react-router');
-var Navigation  = ReactRouter.Navigation;
+var History     = ReactRouter.History;
 var Link        = ReactRouter.Link;
 
 
 module.exports = React.createClass({
 
-  mixins: [Navigation],
+  mixins: [History],
   getInitialState: function() {
     return {
       searchLink: ''
@@ -30,7 +30,7 @@ module.exports = React.createClass({
   onKeyUp: function(event) {
     if (event.keyCode === 13) {
       var searchQuery = this.buildQuery(this.state.searchLink);
-      this.transitionTo('search', { query: searchQuery });
+      this.history.pushState(null, `/s/${searchQuery}`);
     }
   },
 
@@ -44,10 +44,9 @@ module.exports = React.createClass({
 
     return (
       <span id="chat_search">
-        <Link  to="search"
+        <Link  to={`/s/${searchQuery}`}
                id="chat_search_button"
-               title="Search"
-               params={{ query : searchQuery }}>
+               title="Search">
           <span id="iconSearch" className="fa fa-search"></span>
           <span id="iconTop" className="fa fa-bars"></span>
         </Link>

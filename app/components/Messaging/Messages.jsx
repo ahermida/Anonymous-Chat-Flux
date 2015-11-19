@@ -1,9 +1,9 @@
 //==============================================================================
 //                          MESSAGES DISPLAY
 //==============================================================================
-var React = require('react/addons');
+var React = require('react');
 var Message = require('./Message.jsx');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 module.exports = React.createClass({
 
@@ -24,7 +24,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="messages">
-        <ReactCSSTransitionGroup transitionLeave={false} transitionName="message_group">
+        <ReactCSSTransitionGroup  transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionName="message_group">
         {
             this.renderMessages()
         }

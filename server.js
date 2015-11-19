@@ -2,6 +2,12 @@
 //                          BASIC SETUP
 //==============================================================================
 
+//other react-related stuff
+require("babel-core/register")({
+  // This will override `node_modules` ignoring - you can alternatively pass
+  // an array of strings to be explicitly matched or a regex / glob
+});
+
 //==============================================================================
 //                         CALL PACKAGES
 //==============================================================================
@@ -14,19 +20,16 @@ var config 	         = require('./config');
 var server           = require('http').createServer(app);
 var io               = require('socket.io').listen(server);
 var React            = require('react');
+var renderToString   = require('react-dom/server').renderToString;
 var Router           = require('react-router');
 var routes           = require('./routes.jsx');
 var fs               = require('fs');
 var dataStore        = require('./app/stores/appStore.js');
 var searchStore      = require('./app/stores/searchStore.js');
 var Thread           = require('./nodeResources/models/thread.js'); // to fill out user model
+var match            = Router.match;
+var RoutingContext   = Router.RoutingContext;
 
-//other react-related stuff
-require("babel/register")({
-  // This will override `node_modules` ignoring - you can alternatively pass
-  // an array of strings to be explicitly matched or a regex / glob
-  ignore: false
-});
 //==============================================================================
 //                       APP CONFIGURATIONS
 //==============================================================================
@@ -124,44 +127,56 @@ function render(content, data, done) {
   });
 };
 
-app.get('/', function(req, res, next) {
-  var router = Router.create({location: req.url, routes: routes});
-  router.run(function(Handler, state) {
-    var data = { doLoad: true };
-    var html = React.renderToString(React.createElement(Handler));
-    render(html, data, function(err, file){
-      if (err) throw err;
-      res.send(file);
-    });
+app.get('/', function(req, res, next)  {
+  // Note that req.url here should be the full URL path from
+  // the original request, including the query string.
+  match({ routes, location: req.url }, function(err, redirectLocation, renderProps) {
+    if (err) {
+      res.send(err.message);
+    } else if (renderProps) {
+      var html = renderToString(React.createElement(RoutingContext, renderProps));
+      var data = { doLoad: true };
+      render(html, data, function(err, file){
+        if (err) throw err;
+        res.send(file);
+      });
+    }
   });
 });
 
-app.get('/c/:thread', function(req, res, next) {
-  var router = Router.create({location: req.url, routes: routes});
-  router.run(function(Handler, state) {
-    getMessages(req.params.thread, function(messages){
+app.get('/c/:thread', function(req, res, next)  {
+  getMessages(req.params.thread, function(messages) {
+    match({ routes, location: req.url }, function(err, redirectLocation, renderProps) {
+      if (err) {
+        res.send(err.message);
+      } else if (renderProps) {
+        var html = renderToString(React.createElement(RoutingContext, renderProps));
         var _data = dataStore.getData();
         _data.messages = messages;
-        var html = React.renderToString(React.createElement(Handler));
         render(html, _data, function(err, file){
           if (err) throw err;
           res.send(file);
         });
+      }
     });
   });
 });
 
-app.get('/s/:query', function(req, res, next) {
-  var router = Router.create({location: req.url, routes: routes});
-  router.run(function(Handler, state) {
-    getSearched(evaluateKeywords(req.params.query), function(searched){
-        var _data = searchStore.getData();
-        _data.results = searched;
-        var html = React.renderToString(React.createElement(Handler));
-        render(html, _data, function(err, file){
+
+app.get('/s/:query', function(req, res, next)  {
+  getSearched(evaluateKeywords(req.params.query), function(searched) {
+    match({ routes, location: req.url }, function(err, redirectLocation, renderProps) {
+      if (err) {
+        res.send(err.message);
+      } else if (renderProps) {
+        var html     = renderToString(React.createElement(RoutingContext, renderProps));
+        var data     = searchStore.getData();
+        data.results = searched;
+        render(html, data, function(err, file){
           if (err) throw err;
           res.send(file);
         });
+      }
     });
   });
 });

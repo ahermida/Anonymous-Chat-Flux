@@ -1,7 +1,8 @@
 //==============================================================================
 //                         ADD HANDLE INPUT
 //==============================================================================
-var React = require('react');
+var React    = require('react');
+var ReactDOM = require('react-dom');
 var ChatActions = require('../../actions/ChatActions.js');
 
 module.exports = React.createClass({
@@ -21,7 +22,7 @@ module.exports = React.createClass({
      ChatActions.addHandle(value);
     }
     if (event.keyCode === 13) {
-      React.findDOMNode(this).blur();
+      ReactDOM.findDOMNode(this).blur();
     }
   },
 

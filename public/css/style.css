@@ -10,7 +10,7 @@ html{
     margin: 0;
     padding: 0;
 }
-body, .main_view, .search_view, .landing_page {
+body, .main_view, .search_view, .landing_page, #react {
   margin: 0 0;
   padding: 0 0;
   height: 100%;
