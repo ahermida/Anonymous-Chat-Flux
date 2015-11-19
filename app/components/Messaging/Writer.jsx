@@ -3,6 +3,7 @@
 //==============================================================================
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ChatActions = require('../../actions/ChatActions.js');
 var Username = require('./Username.jsx');
 
@@ -57,7 +58,7 @@ module.exports = React.createClass({
   onKeyUp: function(event) {
     event.preventDefault();
     if (event.keyCode === 13 && event.target.value &&
-        React.findDOMNode(this.refs.writer_button).offsetParent === null) {
+        ReactDOM.findDOMNode(this.refs.writer_button).offsetParent === null) {
       var date = new Date().getTime();
       var rv = {
         username: this.props.username,
@@ -86,7 +87,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    React.findDOMNode(this.refs.writer_input).focus();
+    ReactDOM.findDOMNode(this.refs.writer_input).focus();
   },
 
   renderInput: function() {

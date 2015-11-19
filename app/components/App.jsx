@@ -4,14 +4,14 @@
 
 var React       = require('react');
 var ReactRouter = require('react-router');
-var Navigation  = ReactRouter.Navigation;
+var History     = ReactRouter.History;
 var Link        = ReactRouter.Link;
 var HomeTitle   = require('./Shared/HomeTitle.jsx');
 var isNode      = (typeof process != 'undefined' && typeof process.versions != 'undefined' && typeof process.versions.node != 'undefined');
 
 module.exports = React.createClass({
 
-  mixins: [Navigation],
+  mixins: [History],
   getInitialState: function() {
     return {
       roomLink: ''
@@ -37,10 +37,11 @@ module.exports = React.createClass({
   onKeyUp: function(event) {
     if (event.keyCode === 13 && event.target.value) {
       rv = '/c/' + event.target.value;
-      this.transitionTo('chat', {thread: event.target.value});
+      this.history.pushState(null, `/c/${event.target.value}`);
     } else {
-      if (event.keyCode === 13)
-        this.transitionTo('chat', {thread: 'general'});
+      if (event.keyCode === 13) {
+        this.history.pushState(null, `/c/general`);
+      }
     }
   },
 
@@ -70,8 +71,8 @@ module.exports = React.createClass({
                onKeyUp={this.onKeyUp} />
           </div>
           <div id="landing_button_block">
-            <Link to="chat" className="landing_button" params={{ thread: newLink }}>New Room</Link>
-            <Link to="search" className="landing_button" params={{ query : searchQuery }}>Find Topic</Link>
+            <Link to={`/c/${newLink}`} className="landing_button">New Room</Link>
+            <Link to={`/s/${searchQuery}`} className="landing_button">Find Topic</Link>
           </div>
          </div>
       </div>

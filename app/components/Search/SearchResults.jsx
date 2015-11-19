@@ -24,7 +24,7 @@ module.exports = React.createClass({
         if (thread.messages.length > 0 && thread.room.length <= 12) {
           return (
             <div className="thread" key={i}>
-              <Link to="chat" params={{thread: thread.room}}>thread.room</Link>
+              <Link to={`/c/${thread.room}`}>{thread.room}</Link>
               <ThreadTimestamp timestamp={thread.createdAt}/>
               <ThreadSample messages={thread.messages}/>
             </div>
