@@ -29,7 +29,7 @@ module.exports = {
       actionType: ActionTypes.SET_SPINNER,
       spinner: true
     });
-    request.post('https://localhost:8080/api/s/')
+    request.post('http://localhost:8080/api/s/')
     .set('Content-Type', 'application/json')
     .send(query)
     .end(function(err, res) {
