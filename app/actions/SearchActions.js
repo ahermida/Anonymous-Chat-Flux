@@ -11,7 +11,7 @@ var request       = require('superagent');
 module.exports = {
 
   doSearch: function(query) {
-    request.post('http://localhost:8080/api/s/')
+    request.post(window.location.hostname + '/api/s/')
     .set('Content-Type', 'application/json')
     .send(query)
     .end(function(err, res) {
@@ -29,7 +29,7 @@ module.exports = {
       actionType: ActionTypes.SET_SPINNER,
       spinner: true
     });
-    request.post('http://localhost:8080/api/s/')
+    request.post(window.location.hostname + '/api/s/')
     .set('Content-Type', 'application/json')
     .send(query)
     .end(function(err, res) {
