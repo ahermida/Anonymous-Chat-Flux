@@ -48,7 +48,7 @@ module.exports = {
   },
 
   loadMessages: function (thread) {
-    request.get('https://localhost:8080/api/c/' + thread).end(function (err, res) {
+    request.get(window.location.hostname + '/api/c/' + thread).end(function (err, res) {
       if (err) console.log(err);
       AppDispatcher.handleViewAction({
         actionType: ActionTypes.LOAD_MESSAGES,
@@ -91,7 +91,7 @@ var request = require('superagent');
 module.exports = {
 
   doSearch: function (query) {
-    request.post('http://localhost:8080/api/s/').set('Content-Type', 'application/json').send(query).end(function (err, res) {
+    request.post(window.location.hostname + '/api/s/').set('Content-Type', 'application/json').send(query).end(function (err, res) {
       if (err) console.log(err);
       AppDispatcher.handleViewAction({
         actionType: ActionTypes.DO_SEARCH,
@@ -105,7 +105,7 @@ module.exports = {
       actionType: ActionTypes.SET_SPINNER,
       spinner: true
     });
-    request.post('https://localhost:8080/api/s/').set('Content-Type', 'application/json').send(query).end(function (err, res) {
+    request.post(window.location.hostname + '/api/s/').set('Content-Type', 'application/json').send(query).end(function (err, res) {
       if (err) console.log(err);
       AppDispatcher.handleViewAction({
         actionType: ActionTypes.APPEND_MORE,
