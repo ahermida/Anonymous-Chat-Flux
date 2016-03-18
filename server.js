@@ -117,13 +117,22 @@ app.use('/api', apiRoutes);
 //set to static
 app.use(express.static(__dirname + '/public'));
 
+//Escape Content in JSON -- check https://gist.github.com/CatTail/4174511
+var encodeHTML = function(str) {
+  var buf = [];
+  for (var i=str.length-1;i>=0;i--) {
+    buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+  }
+  return buf.join('');
+};
+
 //REACT ROUTER
 function render(content, data, done) {
   fs.readFile('./views/index.html', 'utf8', function (err, layout) {
     if (err) done(err);
     done(null, layout
         .replace('{{{body}}}', content)
-        .replace('{{{data}}}', JSON.stringify(data)));
+        .replace('{{{data}}}', encodeHTML(JSON.stringify(data))));
   });
 };
 
