@@ -11,7 +11,7 @@ var request       = require('superagent');
 module.exports = {
 
   doSearch: function(query) {
-    request.post('/api/s/')
+    request.post('http://localhost:8080/api/s/')
     .set('Content-Type', 'application/json')
     .send(query)
     .end(function(err, res) {

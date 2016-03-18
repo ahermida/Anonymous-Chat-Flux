@@ -1,8 +1,12 @@
+
 # Runtime data
+
+
+
 pids
 *.pid
 *.seed
-
+config.js
 
 # node-waf configuration
 .lock-wscript

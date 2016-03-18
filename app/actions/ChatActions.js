@@ -47,7 +47,7 @@ module.exports = {
   },
 
   loadMessages: function(thread) {
-    request.get('/api/c/' + thread)
+    request.get('http://localhost:8080/api/c/' + thread)
     .end(function(err, res) {
         if(err)
           console.log(err);
